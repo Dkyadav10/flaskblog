@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 db = SQLAlchemy(app)
 
-
+app.app_context().push()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -23,6 +23,11 @@ class User(db.Model):
 
     def __repr__(self):
         return f"user('{self.username}','{self.email}', '{self.image_file}')"
+    
+    def __init__(self,username,email,password):
+        self.username = username
+        self.email = email
+        self.password = password
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -33,6 +38,10 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"post('{self.title}', '{self.date_posted}')"
+
+    def __init__(self,title,content):
+        self.title = title
+        self.content = content
 
 
 posts = [
